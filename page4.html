@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2.7</title>
+</head>
+<body>
+  <p>введите строку:</p>
+  <input type="text" id = "user_input"><br>
+  <button id = "process">выполнить</button>
+  <button id = "clear">очистить</button><br>
+  <TextArea id = "text"></TextArea>
+  <script>
+    var button_process = document.getElementById("process"),
+        button_clear = document.getElementById("clear"),
+				text_area = document.getElementById("text");
+        
+    button_process.onclick = function() {
+    	var user_input = document.getElementById("user_input").value;
+      for(i=0; i<user_input.length; i++){
+	      text_area.value = text_area.value + user_input[i] + '\n'
+      }
+    }
+    button_clear.onclick = function() {
+    	text_area.value = ''
+		}
+  </script>
+</body>
+</html>

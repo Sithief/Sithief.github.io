@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style type="text/css">
+  .wrapper {
+    border: 1px solid #cccccc;
+    color: #cccccc;
+    margin: 30px auto;
+    padding: 15px;
+    width: 500px;
+    text-align: center;
+}
+</style>
+
+<body  style="background-color: #454545">
+<div id="first" class="wrapper">
+    <form action="">
+        <p>Автоматически</p>
+        <label id="sidelab" for="side1">Введи сторону:</label>
+        <input id="side1" type="text"><br><br>
+        <label id="resultlab" for="result1">Площадь:</label>
+        <input id="result1" type="text">
+    </form>
+</div>
+<div id="sec" class="wrapper">
+    <form action="">
+        <p>При выделении значения</p>
+        <label id="sidelab2" for="side2">Введи сторону:</label>
+        <input id="side2" value="5" type="text"><br><br>
+        <label id="resultlab2" for="result2">Площадь:</label>
+        <input id="result2" type="text">
+    </form>
+</div>
+<div id="third" class="wrapper">
+    <form action="">
+        <p>Фокус на поле</p>
+        <label id="sidelab3" for="side3">Введи сторону:</label>
+        <input id="side3" value="5" type="text"><br><br>
+        <label id="resultlab3" for="result3">Площадь:</label>
+        <input id="result3" type="text">
+    </form>
+</div>
+<div id="fourth" class="wrapper">
+    <form action="">
+        <p>Потеря фокуса</p>
+        <label id="sidelab4" for="side4">Введи сторону:</label>
+        <input id="side4" type="text"><br><br>
+        <label id="resultlab4" for="result4">Площадь:</label>
+        <input id="result4" type="text">
+    </form>
+</div>
+<script>
+    var input = document.getElementById('side1');
+    input.oninput = function() {
+        document.getElementById('result1').value = input.value*input.value;
+    };
+
+    var input2 = document.getElementById('side2');
+    input2.onselect = function() {
+        document.getElementById('result2').value = input2.value*input2.value;
+    };
+
+    var input3 = document.getElementById('side3');
+    input3.onfocus = function() {
+        document.getElementById('result3').value = input3.value*input3.value;
+    };
+
+    var input4 = document.getElementById('side4');
+    input4.onblur = function() {
+        console.log(input3.value);
+        document.getElementById('result4').value = input4.value*input4.value;
+    }
+</script>
+</body>
+</html>

@@ -1,29 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>2.7</title>
+    <meta charset="UTF-8">
+    <title>Lab_2.1</title>
 </head>
-<body>
-  <p>введите строку:</p>
-  <input type="text" id = "user_input"><br>
-  <button id = "process">выполнить</button>
-  <button id = "clear">очистить</button><br>
-  <TextArea id = "text"></TextArea>
-  <script>
-    var button_process = document.getElementById("process"),
-        button_clear = document.getElementById("clear"),
-				text_area = document.getElementById("text");
-        
-    button_process.onclick = function() {
-    	var user_input = document.getElementById("user_input").value;
-      for(i=0; i<user_input.length; i++){
-	      text_area.value = text_area.value + user_input[i] + '\n'
+<style type="text/css">
+  p{
+    color: #cccccc;
+  }
+</style>
+<body style="background: #454545">
+    <img name="animation" src="img/s1.gif" >
+    <p onClick="start()">Старт</p>
+    <p onclick="stop()">Стоп</p>
+    <p onClick="faster()">Быстрее</p>
+    <p onclick="slower()">Медленнее</p>
+
+    <script>
+      var go;
+      var speedDefault = 500;
+      function start() {
+          clearInterval(go)
+          go = setInterval('animate()', speedDefault);
       }
-    }
-    button_clear.onclick = function() {
-    	text_area.value = ''
-		}
-  </script>
+
+      function slower () {
+          if ( speedDefault < 10000) {
+              speedDefault += 100;
+              start()
+          } else {
+              alert("Скорость минимальна!")
+          }
+      }
+      function faster() {
+          if ( speedDefault > 100) {
+              speedDefault -= 100;
+              start()
+          } else {
+              alert("Скорость максмимальна!")
+          }
+
+      }
+      i = 0;
+      rang = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+      function animate() {
+          document.querySelector("img").setAttribute("src", "img/s" + rang[i] + ".gif");
+          console.log(rang[i]);
+          if (i < 11) {
+              i++;
+          } else {
+              i = 0
+          }
+
+      }
+      function stop() {
+          clearInterval(go)
+      }
+    </script>
 </body>
 </html>

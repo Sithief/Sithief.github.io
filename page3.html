@@ -1,130 +1,105 @@
-<!doctype html>
-<html lang="rus">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <STYLE>
-
-    .t1 {
-      color: #000050;
-      font-family: Arial;
-      font-size: 30pt;
-      margin-top: 3em;
-      text-align: center;
-    }
-
-    .t2 {
-      color: #0000ff;
-      font-family: Arial;
-      font-size: 30pt;
-      margin-top: -58pt;
-      text-align: center;
-      margin-left: -3pt;
-    }
-
-    .t3 {
-      background: #888888;
-      color: #000000;
-      margin-left: 5em;
-      margin-right: 5em;
-    }
-
-    .t4 {
-      background: #ffffff;
-      color: #000000;
-      margin-left: 5em;
-      margin-right: 5em;
-      border-left-style: solid;
-      border-color: #ff0000;
-      padding-left: 20pt;
-      padding-right: 20pt;
-      text-align: justify;
-    }
-
-    .t5 {
-      padding: 1px 0px 1px 1em;
-      background: #005500;
-      background-size: 100em 100em;
-      color: #ffb300;
-      text-decoration: overline underline;
-      max-width: 430px;
-      min-height: 40px;
-      margin: 10px auto 10px auto;
-      line-height: 160%;
-    }
-
-    .t6 {   background: #ffffff;
-      color: #000000;
-      margin-left: 5em;
-      margin-right: 5em;
-      border-right-style: double;
-      border-color: #0000ff;
-      padding-left: 20pt;
-      padding-right: 20pt;
-      text-align: justify;
-    }
-    .t7 {
-      background: #ffffff;
-      color: #000000;
-      margin-top: 10px;
-      margin-left: 5em;
-      margin-right: 5em;
-      padding-left: 20pt;
-      padding-right: 20pt;
-      text-align: justify;
-    }
-    #a1 {
-      color: green;
-    }
-    #a2 {
-      color: red;
-    }
-
-  </STYLE>
+    <meta charset="UTF-8">
+    <title>2.8</title>
 </head>
-<body CLASS="t3">
-  <H2 CLASS="t1">НЕМНОГО ИСТОРИИ</H2>
-  <H2 CLASS="t2">НЕМНОГО ИСТОРИИ</H2>
+<style type="text/css">
+  .Tab {
+    color: #cccccc;
+    margin: 40px 30%;
+    text-align: left;
+  }
+  .Top {
+    margin: 10px 30%;
+    color: #cccccc;
+  }
+</style>
+<body style="background-color: #454545">
+<label for="marks" class="Top">Введите оценки: </label>
+<input type="text" id="marks" style="margin: 10px 30%"><br>
+<button id="process" style="margin: 10px 30%">Выполнить</button><br>
 
-  <DIV CLASS="t4">  В течение многих лет предпринималось немало попыток разработать концепцию
-    универсальной информационной базы данных, в которой можно было бы не только
-    получать информацию из любой точки земного шара, но и иметь удобный способ
-    связи информационных сегментов друг с другом, так чтобы наиболее важные
-    данные могли быть быстро найдены. В 60-е годы исследования в этой области
-    породили понятие <i><b>"информационной Вселенной"</b></i> (docuniverse = documentation +
-    universe), которая преобразила бы всю информационную деятельность. Но только в
-    настоящее время появилась технология, воплотившая эту идею и предоставляющая
-    возможности ее реализации в масштабах планеты.
-  </DIV>
+<span  class="Top">Сводка по экзамену</span>
+<table class="Tab">
+    <tr>
+        <td>Оценка</td>
+        <td>Количество сдавших на оценку</td>
+    </tr>
+    <tr>
+        <td>Отлично</td>
+        <td><input id="perf" type="text"></td>
+    </tr>
+    <tr>
+        <td>Хорошо</td>
+        <td><input id="good" type="text"></td>
+    </tr>
+    <tr>
+        <td>Удовлетворительно</td>
+        <td><input id="nice" type="text"></td>
+    </tr>
+    <tr>
+        <td>Неудовлетворительно</td>
+        <td><input id="bad" type="text"></td>
+    </tr>
+    <tr>
+        <td>Количество сдавших</td>
+        <td><input id="succeded" type="text"></td>
+    </tr>
+    <tr>
+        <td>Средний балл:</td>
+        <td><input id="avg" type="text"></td>
+    </tr>
+</table>
 
-  <H2 CLASS="t5">WWW - "ВСЕМИРНАЯ ПАУТИНА" </H2>
+<script>
 
-  <DIV CLASS="t6">  WWW – это аббревиатура от <sup>"World Wide</sup> Web" <sub>("Всемирная паутина")</sub>.
-    Официальное определение World Wide Web звучит как мировая виртуальная
-    файловая система – широкомасштабная гипермедиа-среда, ориентированная на
-    предоставление универсального доступа к информационным ресурсам.
-    Проект WWW возник в начале 1989 года в Европейской Лаборатории физики
-    элементарных частиц (CERN) в Женеве (<a id="a1" href="http://www.cern.ch/">http://www.cern.ch/</a>). Идея проекта состояла в
-    создании гипертекстовой системы связи документов в компьютерной сети. Со
-    временем World Wide Web (WWW, Web) превратилась в общемировую систему,
-    состоящую из программного обеспечения – WWW технологий и связанных между
-    собой документов.
-  </DIV>
-  <div class="t7">
-    Используя специальный программный интерфейс для WWW, изменился процесс
-    просмотра и создания информации. Суть в том, что компьютер, подключенный к
-    Интернет в режиме on-line, можно преобразовать в Web-сервер и наполнить его
-    информацией. По всему миру существуют тысячи информационных серверов, и с
-    любого компьютера, имеющего выход в Интернет, можно установить сетевое
-    соединение с Web-сервером и смотреть текст, графику, видеоролики, слушать
-    аудиоклипы (все это вместе и называется гипермедиа).
-    Первый такой сервер был организован в CERN, там же с целью развития и
-    поддержки стандартов WWW технологий был создан The World Wide Web
-    Consortium, или W3C. Web-сервер Консорциума <a id="a2" href="http://www.w3.org/pub/WWW/">http://www.w3.org/pub/WWW/</a> является
-    интегрирующим сервером по поддержке WWW технологий в Интернет.
-  </div>
+    var process = document.getElementById("process");
+    process.onclick = function () {
+        var marks = document.getElementById("marks").value;
+
+        var p = [];
+        var g = [];
+        var n = [];
+        var b = [];
+
+        var markList = marks.split('');
+        for (i=0; i<markList.length; i++) {
+            switch (markList[i]) {
+                case "5":
+                    p.push(markList[i]);
+                    break;
+                case "4":
+                    g.push(markList[i]);
+                    break;
+                case "3":
+                    n.push(markList[i]);
+                    break;
+                case "2":
+                    b.push(markList[i]);
+                    break;
+            }
+        }
+        var perf    = document.getElementById("perf"),
+            good    = document.getElementById("good"),
+            nice    = document.getElementById("nice"),
+            bad     = document.getElementById("bad"),
+            succededVal    = document.getElementById("succeded"),
+            avgVal    = document.getElementById("avg");
+
+        console.log(p.length, g.length, n.length, b.length);
+        perf.value = p.length;
+        good.value = g.length;
+        nice.value = n.length;
+        bad.value = b.length;
+        var succededVal = parseInt(perf.value, 10) + parseInt(good.value, 10) + parseInt(nice.value, 10);
+        var total = markList.reduce(function(a, b) {
+            return ((parseInt(a) + parseInt(b)));
+        });
+        var avg = total/markList.length;
+        succeded.value = succededVal;
+        avgVal.value = avg
+    }
+</script>
 </body>
 </html>

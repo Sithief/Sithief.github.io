@@ -16,7 +16,6 @@ class Ball {
 
   update() {
     if (this.on_screen) {
-      this.vel.y += 0.003;
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
     }  
@@ -30,16 +29,16 @@ class Ball {
   }
 
   checkBorders() {
-    let max_speed = 5;
+    let max_speed = 1;
     if (this.on_screen) {
-      if ((this.pos.x + this.rad >= width && this.vel.x > 0) || 
-        (this.pos.x - this.rad <= 0 && this.vel.x < 0)) {
+      if ((this.pos.x > width && this.vel.x > 0) || 
+          (this.pos.x < 0 && this.vel.x < 0)) {
         this.vel.x *= -1;
       }
-      if (this.pos.y - this.rad <= 0 && this.vel.y < 0) {
+      if (this.pos.y < 0 && this.vel.y < 0) {
         this.vel.y *= -1;
       }
-      else if (this.pos.y - this.rad > height) {
+      else if (this.pos.y > height) {
         this.disable();
       }
       let squared_speed = this.vel.x * this.vel.x + this.vel.y * this.vel.y;

@@ -10,12 +10,17 @@ var score = 0;
 var defeat = false;
 var text_output;
 var speed_button;
-var draw_speed = 1;
+var draw_speed = 2;
+var collisions_button;
+var collisions = true;
+var end_button;
 
 function setup() {
     createCanvas(400, 600);
     text_output = createDiv('this is some text');
     speed_button = createButton('speed: ' + draw_speed);
+    collisions_button = createButton('collisions: ' + collisions);
+    end_button = createButton('end try');
     force = createVector(0, 0);
     addNewBalls(1);
     addBlockLine();
@@ -23,8 +28,10 @@ function setup() {
 
 function draw() {
     speed_button.mousePressed(changeSpeed);
+    collisions_button.mousePressed(chengeCollisions);
+    end_button.mousePressed(endTry);
     if (!defeat) { 
-        if (frameCount % (30 / draw_speed) == 0){
+        if (frameCount % (60 / draw_speed) == 0){
             start();
         }
         for (let f = 0; f < draw_speed; f ++) {
@@ -47,8 +54,38 @@ function draw() {
 }
 
 function draw_aim() {
-    stroke(255);
-    line(width/2, height, mouseX, mouseY);
+    if (mouseY > 0 && mouseY < height && mouseX > 0 && mouseX < width) {
+        let px = width / 2;
+        let py = height;
+        let k = (py - mouseY) / (px - mouseX);
+        let b = py - k * px;
+        let y = 0;
+        let x = (y - b) / k;
+        if (x < 0) {
+            x = 0;
+        } else if (x > width) {
+            x = width;
+        }
+        y = k * x + b;
+
+        let xd = px - x;
+        let yd = py - y;
+        stroke(255, 65);
+        strokeWeight(ball_size * 2);
+        line(px, py, x, y);
+        while (y > 0) {
+            px = x;
+            py = y;
+            if (x){
+                x = 0;
+            } else {
+                x = width;
+            }
+            y -= 2 * yd;
+            line(px, py, x, y);
+        } 
+        strokeWeight(1);
+    }
 }
 
 function isStepFinish() {
@@ -72,13 +109,15 @@ function isStepFinish() {
 }
 
 function update() {
-    for (let i = 0; i < balls.length; i++){
-        for (let j = 0; j < balls.length; j++){
-            if (i != j){
-                balls[i].checkCollisions(balls[j]);
+    if (collisions) {
+        for (let i = 0; i < balls.length; i++){
+            for (let j = 0; j < balls.length; j++){
+                if (i != j){
+                    balls[i].checkCollisions(balls[j]);
+                }
             }
-        }
-    } 
+        } 
+    }
     for (let i = 0; i < blocks.length; i++){
         for (let j = 0; j < balls.length; j++){
             blocks[i].checkHits(balls[j]);
@@ -144,11 +183,21 @@ function addBlockLine(){
 }
 
 function changeSpeed() {
-    if (draw_speed < 5) {
-        draw_speed += 1;
+    if (draw_speed < 32) {
+        draw_speed *= 2;
     } else {
-        draw_speed = 1;
+        draw_speed = 2;
     }
     speed_button.html('speed: ' + draw_speed);
 }
 
+function chengeCollisions() {
+    collisions = !collisions;
+    collisions_button.html('collisions: ' + collisions);
+}
+
+function endTry() {
+    for (let i = 0; i < balls.length; i++){
+        balls[i].disable();
+    }
+}

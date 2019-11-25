@@ -1,35 +1,8 @@
 <!doctype html>
 <html lang="rus">
-<style type="text/css">
-	.on {
-		display: inline-block;
-		background-color: #454545;
-		color: #cccccc;
-		font-size: 20px;
-		height: 28px;
-		width: 160px;
-		text-align: center;
-		text-decoration: none;
-	}
-	.off {
-		display: inline-block;
-		background-color: #353535;
-		color: #909090;
-		font-size: 20px;
-		height: 28px;
-		width: 160px;
-		text-align: center;
-		text-decoration: none;
-	}
-</style>
-<body style="background-color: #353535">
-	<a class="off" onmouseover=activate(0) onmouseout=deactivate(0) href="default_page.html" target="window">главная страница</a>
-	<a class="off" onmouseover=activate(1) onmouseout=deactivate(1) HREF="page1.html" target="window">1 страница</a>
-	<a class="off" onmouseover=activate(2) onmouseout=deactivate(2) href="page2.html" target="window">2 страница</a>
-	<a class="off" onmouseover=activate(3) onmouseout=deactivate(3) href="page3.html" target="window">3 страница</a>
-	<a class="off" onmouseover=activate(4) onmouseout=deactivate(4) href="page4.html" target="window">4 страница</a>
-	<a class="off" onmouseover=activate(5) onmouseout=deactivate(5) href="page5.html" target="window">5 страница</a>
-	
+<link rel="stylesheet" href="CSS/style.css" type="text/css"/>
+<body class="menu">
+	<a class="off" onmouseover=activate(0) onmouseout=deactivate(0) href="balls_game/index.html" target="window">Игра про шарики</a>
 	<script type="text/javascript">
 		function activate(number){
 			document.getElementsByTagName('a')[number].className = 'on';

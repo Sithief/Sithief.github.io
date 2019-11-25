@@ -146,7 +146,7 @@ function start() {
     }
 }
 
-function mouseClicked(){
+function mouseReleased(){
     // print('is_started '+ is_started);
     print('balls.length '+ balls.length);
     print('inactive_balls.length '+ inactive_balls.length);

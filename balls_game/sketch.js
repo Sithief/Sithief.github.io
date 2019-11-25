@@ -3,20 +3,20 @@ var inactive_balls = [];
 var blocks = [];
 var is_started = false;
 var force;
-var ball_size = 10;
-var block_size = 50;
+var ball_size = 20;
+var block_size = 100;
 var block_hp = 1;
 var score = 0;
 var defeat = false;
 var text_output;
 var speed_button;
-var draw_speed = 2;
+var draw_speed = 5;
 var collisions_button;
 var collisions = true;
 var end_button;
 
 function setup() {
-    createCanvas(400, 600);
+    createCanvas(600, 800);
     text_output = createDiv('this is some text');
     speed_button = createButton('speed: ' + draw_speed);
     collisions_button = createButton('collisions: ' + collisions);
@@ -31,7 +31,7 @@ function draw() {
     collisions_button.mousePressed(chengeCollisions);
     end_button.mousePressed(endTry);
     if (!defeat) { 
-        if (frameCount % (60 / draw_speed) == 0){
+        if (frameCount % (ball_size * 10 / draw_speed) == 0){
             start();
         }
         for (let f = 0; f < draw_speed; f ++) {
@@ -183,10 +183,10 @@ function addBlockLine(){
 }
 
 function changeSpeed() {
-    if (draw_speed < 32) {
+    if (draw_speed < 40) {
         draw_speed *= 2;
     } else {
-        draw_speed = 2;
+        draw_speed = 5;
     }
     speed_button.html('speed: ' + draw_speed);
 }

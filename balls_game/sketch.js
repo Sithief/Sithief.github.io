@@ -25,7 +25,7 @@ function setup() {
     force = createVector(0, 0);
     addNewBalls(1);
     addBlockLine();
-    createDiv('version: 0.6');
+    createDiv('version: 0.7');
 }
 
 function draw() {
@@ -33,7 +33,7 @@ function draw() {
     collisions_button.mousePressed(chengeCollisions);
     end_button.mousePressed(endTry);
     if (!defeat) { 
-        if (frameCount % (ball_size * 3 / draw_speed) == 0){
+        if (frameCount % (ball_size / draw_speed) == 0){
             start();
         }
         for (let f = 0; f < draw_speed; f ++) {

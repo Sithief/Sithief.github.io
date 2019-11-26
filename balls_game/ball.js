@@ -9,7 +9,7 @@ class Ball {
 
   draw() {
     stroke(255);
-    fill(map(this.last_hit, 0, max_hit, 0, 255));
+    fill(255, map(this.last_hit, 0, max_hit, 0, 255));
     let x = this.pos.x;
     let y = this.pos.y;
     circle(x, y, this.rad * 2);

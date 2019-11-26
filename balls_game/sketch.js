@@ -4,6 +4,7 @@ var blocks = [];
 var is_started = false;
 var force;
 var ball_size = 20;
+var max_hit = 2000; // update ball without hit block
 var block_size = 100;
 var block_hp = 1;
 var score = 0;
@@ -127,6 +128,7 @@ function update() {
     } 
     for (let i = 0; i < balls.length; i++){
         balls[i].checkBorders();
+        balls[i].speedControl();
         balls[i].update();
     }
 }
@@ -142,7 +144,7 @@ function checkActive() {
 function start() {
     if (is_started && inactive_balls.length > 0) {
         let ball = inactive_balls.pop();
-        ball.on_screen = true;
+        ball.enable();
         ball.addForce(force.x, force.y);
         balls.push(ball);
     }
@@ -174,14 +176,16 @@ function addBlockLine(){
             defeat = true;
         }
     }
+    let max_bcount = (width / block_size) * (height / block_size) / 2;
     for (let i = 0; i < width / block_size; i++) {
         let x = block_size * i;
         let y = block_size;
         let block_pos = createVector(x, y);
-        if (random() < 0.5) {
+        let chanse = 1 - blocks.length / max_bcount;
+        if (random() < 0.01 * chanse) {
+            blocks.push(new Block(block_pos, block_size, block_hp*2, 1));
+        } else if (random() < 0.7 * chanse) {
             blocks.push(new Block(block_pos, block_size, block_hp, 0));
-        } else if (random() < 0.05) {
-            blocks.push(new Block(block_pos, block_size, block_hp * 2, 1));
         }
     }
 }

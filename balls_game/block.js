@@ -56,10 +56,13 @@ class Block {
         } else {
             hit = 0;
         }
-        this.hp -= hit;
-        score += hit;
-        if (this.type == 1 && hit) {
-            ball.disable();
+        if (hit) {
+            this.hp -= hit;
+            score += hit;
+            ball.last_hit = max_hit;   
+            if (this.type == 1) {
+                ball.disable();
+            }
         }
     }
 

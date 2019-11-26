@@ -4,11 +4,12 @@ class Ball {
     this.rad = rad;
     this.vel = createVector(0, 0);
     this.on_screen = false;
+    this.last_hit = max_hit;
   }
 
   draw() {
-    noStroke();
-    fill(255)
+    stroke(127);
+    fill(map(this.last_hit, 0, max_hit, 0, 255));
     let x = this.pos.x;
     let y = this.pos.y;
     circle(x, y, this.rad * 2);
@@ -18,6 +19,10 @@ class Ball {
     if (this.on_screen) {
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
+      this.last_hit -= 1;
+      if (this.last_hit <= 0) {
+        this.disable();
+      }
     }  
   }
 
@@ -29,7 +34,6 @@ class Ball {
   }
 
   checkBorders() {
-    let max_speed = 5;
     if (this.on_screen) {
       if ((this.pos.x >= width && this.vel.x > 0) || 
           (this.pos.x <= 0 && this.vel.x < 0)) {
@@ -41,13 +45,25 @@ class Ball {
       else if (this.pos.y > height) {
         this.disable();
       }
-      let squared_speed = this.vel.x * this.vel.x + this.vel.y * this.vel.y;
-      if (squared_speed > max_speed * max_speed) {
-        let speed_mult = max_speed / sqrt(squared_speed);
-        this.vel.x *= speed_mult;
-        this.vel.y *= speed_mult;
-      }
     }
+  }
+
+  speedControl() {
+    if (this.on_screen) {
+      let max_speed = 5;
+      let squared_speed = this.vel.x * this.vel.x + this.vel.y * this.vel.y;
+      let speed_mult = 1;
+      if (squared_speed > max_speed * max_speed) {
+        speed_mult = max_speed / sqrt(squared_speed);
+      } 
+      this.vel.x *= speed_mult;
+      this.vel.y *= speed_mult;
+    }
+  }
+
+  enable() {
+    this.on_screen = true;
+    this.last_hit = max_hit;
   }
 
   disable() {

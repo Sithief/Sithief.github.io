@@ -1,13 +1,20 @@
 class Block {
-    constructor(pos, rad, hp) {
+    constructor(pos, rad, hp, type) {
         this.pos = pos;
         this.rad = rad;
         this.hp = hp;
+        this.type = type;
     }
 
     draw() {
         stroke(65);
-        fill(255);    
+        if (this.type == 0) {
+            fill(255);
+        } else if (this.type == 1) {
+            fill(200, 0, 0);
+        } else {
+            fill(65);
+        }
         let x = this.pos.x;
         let y = this.pos.y;
         square(x, y, this.rad);
@@ -22,6 +29,10 @@ class Block {
         let y = this.pos.y;
         let r = this.rad;
         var hit = 1;
+        if (abs(ball.pos.x - (x + r / 2)) > ball.rad + r ||
+            abs(ball.pos.y - (y + r / 2)) > ball.rad + r) {
+            return;
+        }
         if (ball.vel.y > 0 &&
             collideLineCircle(x, y, x + r, y, 
                 ball.pos.x, ball.pos.y, ball.rad)){
@@ -47,6 +58,9 @@ class Block {
         }
         this.hp -= hit;
         score += hit;
+        if (this.type == 1 && hit) {
+            ball.disable();
+        }
     }
 
 }

@@ -10,7 +10,7 @@ var score = 0;
 var defeat = false;
 var text_output;
 var speed_button;
-var draw_speed = 5;
+var draw_speed = 2;
 var collisions_button;
 var collisions = true;
 var end_button;
@@ -24,6 +24,7 @@ function setup() {
     force = createVector(0, 0);
     addNewBalls(1);
     addBlockLine();
+    createDiv('version: 0.4');
 }
 
 function draw() {
@@ -31,7 +32,7 @@ function draw() {
     collisions_button.mousePressed(chengeCollisions);
     end_button.mousePressed(endTry);
     if (!defeat) { 
-        if (frameCount % (ball_size * 10 / draw_speed) == 0){
+        if (frameCount % (ball_size * 3 / draw_speed) == 0){
             start();
         }
         for (let f = 0; f < draw_speed; f ++) {
@@ -173,20 +174,22 @@ function addBlockLine(){
         }
     }
     for (let i = 0; i < width / block_size; i++) {
+        let x = block_size * i;
+        let y = block_size;
+        let block_pos = createVector(x, y);
         if (random() < 0.5) {
-            let x = block_size * i;
-            let y = block_size;
-            let block_pos = createVector(x, y);
-            blocks.push(new Block(block_pos, block_size, block_hp));
+            blocks.push(new Block(block_pos, block_size, block_hp, 0));
+        } else if (random() < 0.05) {
+            blocks.push(new Block(block_pos, block_size, block_hp * 2, 1));
         }
     }
 }
 
 function changeSpeed() {
-    if (draw_speed < 40) {
+    if (draw_speed < 16) {
         draw_speed *= 2;
     } else {
-        draw_speed = 5;
+        draw_speed = 2;
     }
     speed_button.html('speed: ' + draw_speed);
 }

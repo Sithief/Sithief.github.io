@@ -24,7 +24,7 @@ function setup() {
     force = createVector(0, 0);
     addNewBalls(1);
     addBlockLine();
-    createDiv('version: 0.4');
+    createDiv('version: 0.5');
 }
 
 function draw() {
@@ -97,7 +97,8 @@ function isStepFinish() {
            break;
         }
     }
-    if (!on_screen && is_started && balls.length > 0){
+    if (!on_screen && is_started && inactive_balls.length == 0){
+        print('finish step');
         let tmp = inactive_balls;
         inactive_balls = balls;
         balls = tmp;

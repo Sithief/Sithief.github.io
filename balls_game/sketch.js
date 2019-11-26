@@ -25,7 +25,7 @@ function setup() {
     force = createVector(0, 0);
     addNewBalls(1);
     addBlockLine();
-    createDiv('version: 0.5');
+    createDiv('version: 0.6');
 }
 
 function draw() {
@@ -72,8 +72,8 @@ function draw_aim() {
 
         let xd = px - x;
         let yd = py - y;
-        stroke(255, 65);
-        strokeWeight(ball_size * 2);
+        stroke(255, 127);
+        strokeWeight(ball_size / 2);
         line(px, py, x, y);
         while (y > 0) {
             px = x;

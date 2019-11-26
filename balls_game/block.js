@@ -18,10 +18,10 @@ class Block {
         let x = this.pos.x;
         let y = this.pos.y;
         square(x, y, this.rad);
-        textAlign(CENTER);
-        textSize(this.rad);
+        textAlign(CENTER, CENTER);
+        textSize(this.rad / 2);
         fill(65);
-        text(this.hp, x + this.rad / 2, y + this.rad);
+        text(this.hp, x + this.rad / 2, y + this.rad / 2);
     }  
 
     checkHits(ball) {

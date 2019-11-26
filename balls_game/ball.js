@@ -8,7 +8,7 @@ class Ball {
   }
 
   draw() {
-    stroke(127);
+    stroke(255);
     fill(map(this.last_hit, 0, max_hit, 0, 255));
     let x = this.pos.x;
     let y = this.pos.y;

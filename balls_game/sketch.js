@@ -25,7 +25,7 @@ function setup() {
     force = createVector(0, 0);
     addNewBalls(1);
     addBlockLine();
-    createDiv('version: 0.7');
+    createDiv('version: 0.8');
 }
 
 function draw() {
@@ -50,6 +50,12 @@ function draw() {
             blocks[i].draw();
         }
         text_output.html('Score: ' + score);
+        if (blocks.length == 0){
+            textAlign(CENTER, CENTER);
+            textSize(width/10);
+            fill(255);
+            text('Level clear!', width/2, height/2);
+        }
     } else {
         text_output.html('Game over. Score: ' + score);
     }

@@ -25,7 +25,7 @@ function setup() {
     force = createVector(0, 0);
     addNewBalls(1);
     addBlockLine();
-    createDiv('version: 0.8');
+    createDiv('version: 0.9');
 }
 
 function draw() {
@@ -180,6 +180,7 @@ function addBlockLine(){
         blocks[i].pos.y += block_size;
         if (blocks[i].pos.y + block_size >= height) {
             defeat = true;
+            end_button.html('restart game');
         }
     }
     let max_bcount = (width / block_size) * (height / block_size) / 2;
@@ -211,7 +212,24 @@ function chengeCollisions() {
 }
 
 function endTry() {
-    for (let i = 0; i < balls.length; i++){
-        balls[i].disable();
+    if (is_started) {
+        for (let i = 0; i < balls.length; i++){
+            let ball = balls.pop();
+            ball.disable();
+            inactive_balls.push(ball);
+        }
+        balls = inactive_balls;
+        inactive_balls = [];
+    }
+    if (defeat) {
+        block_hp = 1;
+        score = 0;  
+        defeat = false;
+        inactive_balls = [];
+        balls = [];
+        blocks = [];
+        addNewBalls(1);
+        addBlockLine();
+        end_button.html('end try');
     }
 }

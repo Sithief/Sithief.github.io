@@ -56,12 +56,19 @@ function updateCookie() {
             'hp': blocks[i].hp,
             'type': blocks[i].type
         });
-    }
+    }  
     let data = {
         'block_hp': block_hp,
         'blocks': blocks_data,
         'score': score
     };
+    if (defeat) {
+        data = {
+            'block_hp': 1,
+            'blocks': [],
+            'score': 0
+        };
+    }
     let JSONdata = JSON.stringify(data);
     let URIdata = encodeURIComponent(JSONdata);
     document.cookie = "game_data=" + URIdata + "; max-age=" + 365*24*60*60;
@@ -235,6 +242,7 @@ function addBlockLine(){
         if (blocks[i].pos.y + block_size >= height) {
             defeat = true;
             end_button.html('restart game');
+            updateCookie();
         }
     }
     let max_bcount = (width / block_size) * (height / block_size) / 2;

@@ -16,6 +16,57 @@ var collisions_button;
 var collisions = true;
 var end_button;
 
+function readCookie() {
+    var cookieName = "game_data=";
+    var docCookie = document.cookie;
+    if (docCookie.length > 0) {
+      var cookieStart = docCookie.indexOf(cookieName);
+      if (cookieStart != -1) {
+         cookieStart = cookieStart + cookieName.length;
+         var end = docCookie.indexOf(";",cookieStart);
+         if (end == -1) {
+            end = docCookie.length;
+         }
+         let cookie = docCookie.substring(cookieStart,end);
+         let json_data = decodeURIComponent(cookie);
+         let data = JSON.parse(json_data);
+         print('cookie = ' + data);
+         block_hp = data.block_hp;
+         score = data.score;
+         addNewBalls(block_hp);
+         for (let i = 0; i < data.blocks.length; i++) {
+            let x = data.blocks[i].pos[0];
+            let y = data.blocks[i].pos[1];
+            let block_pos = createVector(x, y);
+            let hp = data.blocks[i].hp;
+            let type = data.blocks[i].type;
+            blocks.push(new Block(block_pos, block_size, hp, type));
+         }
+         return true;
+      }
+   }
+   return false;
+}
+
+function updateCookie() {
+    let blocks_data = [];
+    for (let i = 0; i < blocks.length; i++) {
+        blocks_data.push({
+            'pos': [blocks[i].pos.x, blocks[i].pos.y],
+            'hp': blocks[i].hp,
+            'type': blocks[i].type
+        });
+    }
+    let data = {
+        'block_hp': block_hp,
+        'blocks': blocks_data,
+        'score': score
+    };
+    let JSONdata = JSON.stringify(data);
+    let URIdata = encodeURIComponent(JSONdata);
+    document.cookie = "game_data=" + URIdata + "; max-age=" + 365*24*60*60;
+}
+
 function setup() {
     createCanvas(600, 800);
     text_output = createDiv('this is some text');
@@ -23,9 +74,11 @@ function setup() {
     collisions_button = createButton('collisions: ' + collisions);
     end_button = createButton('end try');
     force = createVector(0, 0);
-    addNewBalls(1);
-    addBlockLine();
-    createDiv('version: 0.9');
+    if (!readCookie()) {
+        addNewBalls(1);
+        addBlockLine();
+    }
+    createDiv('version: 1.0');
 }
 
 function draw() {
@@ -114,6 +167,7 @@ function isStepFinish() {
         addNewBalls(1);
         block_hp += 1;
         addBlockLine();
+        updateCookie();
     }
 }
 
@@ -198,7 +252,7 @@ function addBlockLine(){
 }
 
 function changeSpeed() {
-    if (draw_speed < 16) {
+    if (draw_speed < 32) {
         draw_speed *= 2;
     } else {
         draw_speed = 2;

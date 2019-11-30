@@ -29,18 +29,12 @@ body {
 }
 button {
 	background-color: #454545;
-	font-size: 32px;
+	font-size: 26px;
 	color: #cccccc;
+	float: right;
 }
 input {
 	background-color: #454545;
 	font-size: 32px;
 	color: #cccccc;
-}
-div {
-	background-color: #353535;
-	font-size: 32px;
-	color: #cccccc;
-	text-align: top;
-	border: solid 1px black;
 }

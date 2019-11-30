@@ -32,13 +32,11 @@ function updateCookie() {
 
 function request(callback_function, method, parametrs) {
     url = 'https://api.vk.com/method/' + method + '?';
-    var params = '';
-    if (parametrs) {
-        for (let i = 0; i < parametrs.length; i++) {
-            params += parametrs[i].name + '=' + parametrs[i].value + '&'; 
-        }
+    var params = ['access_token=' + access_token, 'v='+ version];
+    for (var p in parametrs) {
+        params.push(p + '=' + parametrs[p]);
     }
-    url += params + 'access_token=' + access_token + '&v='+ version;
+    url += params.join('&');
     print('url = '+ url);
     loadJSON(url, callback_function, 'jsonp');
 }

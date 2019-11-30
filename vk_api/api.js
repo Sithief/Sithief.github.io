@@ -37,7 +37,8 @@ function request(callback_function, method, parametrs) {
         for (let i = 0; i < parametrs.length; i++) {
             params += parametrs[i].name + '=' + parametrs[i].value + '&'; 
         }
-        url += params + 'access_token=' + access_token + 'v='+ version;
     }
+    url += params + 'access_token=' + access_token + '&v='+ version;
+    print('url = '+ url);
     loadJSON(url, callback_function, 'jsonp');
 }

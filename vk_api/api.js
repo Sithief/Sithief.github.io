@@ -38,5 +38,11 @@ function request(callback_function, method, parametrs) {
     }
     url += params.join('&');
     print('url = '+ url);
-    loadJSON(url, callback_function, 'jsonp');
+    sleep(250).then(() => {
+        loadJSON(url, callback_function, 'jsonp');
+    });
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

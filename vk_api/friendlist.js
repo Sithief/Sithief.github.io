@@ -30,7 +30,7 @@ function print_result(response) {
             let url = 'https://vk.com/id' + items[i].id;
             let name = items[i].first_name + ' ' + items[i].last_name;
             let user_name = createA(url, name);
-            let user_photo = createImg(items[i].photo_100, '');
+            let user_photo = createImg(items[i].photo_100, '', 'anonymous');
             let delete_button = createButton('Удалить', items[i].id);
             delete_button.mousePressed(deleteBlocked);
             user_div.child(user_photo);

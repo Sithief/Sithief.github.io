@@ -56,7 +56,7 @@ function getAlbumsPhotos(album_id) {
 function appendAlbumsPhotos(response) {
     if (response.response == null) {
         print(response);
-        request(appendAlbumsPhotos, 'photos.get', {'album_id': album_id, 'count': 1000});
+        process_bar['album_id='+album_id].html('ERROR!' + response.error.error_msg);
         return;
     }
     album_id = response.response.items[0].album_id;
@@ -67,12 +67,12 @@ function appendAlbumsPhotos(response) {
             else {return a;}
         });
         var img = loadImage(min_size.url);
-        albums['album_id='+album_id].push(item);
-        let progress = Math.floor(100 * albums['album_id='+album_id].length / response.response.count);
-        process_bar['album_id='+this.album_id].html(progress + '%');
+        albums['album_id='+item.album_id].push(item);
+        let progress = Math.floor(100 * albums['album_id='+item.album_id].length / response.response.count);
+        process_bar['album_id='+item.album_id].html(progress + '%');
     }
     if (response.response.count > albums['album_id='+album_id].length) {
-        request(appendAlbumsPhotos, 'photos.get', {'album_id': album_id, 'count': 1000});
+        request(appendAlbumsPhotos, 'photos.get', {'album_id': album_id, 'count': 1000, 'offset': albums['album_id='+album_id].length});
     }
 }
 

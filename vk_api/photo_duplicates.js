@@ -21,12 +21,13 @@ function setup() {
 function draw() {
     if (comparing_iter >= 0 && comparing_iter < photos.length) {
         background(45);
-        let pr = map(comparing_iter, 0, photos.length - 1, 0, 100) ; 
+        let pr = map(comparing_iter, 0, photos.length - 1, 0, 100);
+        fill(125); 
         rect(0, 0, map(pr, 0, 100, 0, width), 25);
         textAlign(CENTER, CENTER);
         textSize(25);
-        fill(65);
-        text(pr + '%', map(pr, 0, 100, 0, width) / 2, 25 / 2);
+        fill(255);
+        text(Math.floor(pr) + '%', map(pr, 0, 100, 0, width) / 2, 25 / 2);
 
         var similar = photos.slice(comparing_iter, comparing_iter + 1);
         if (similar[0].img.width > similar[0].img.height) {
@@ -76,7 +77,7 @@ function printAlbums(response) {
 function changeAlbumsList() {
     if (this.class() == 'div_off'){
         this.class('div_on');
-        process_bar['album_id='+this.album_id] = createP('0%');
+        process_bar['album_id='+this.album_id] = createP('0');
         this.child(process_bar['album_id='+this.album_id]);
         getAlbumsPhotos(this.album_id);
     } else {
@@ -120,7 +121,7 @@ function successLoad() {
     let alb = albums['album_id='+this.album_id];
     let success = alb.filter(a => a.img.height > 1);
     let progress = Math.floor(map(success.length, 0, alb.length, 0, 100));
-    process_bar['album_id='+this.album_id].html(progress + '%');
+    process_bar['album_id='+this.album_id].html(success.length + '/' + alb.length);
 }
 
 function searchDuplicates() {

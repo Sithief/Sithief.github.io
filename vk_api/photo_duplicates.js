@@ -20,7 +20,30 @@ function setup() {
 
 function draw() {
     if (comparing_iter >= 0 && comparing_iter < photos.length) {
+        var steps = 50;
+        var similar;
+        while (comparing_iter < photos.length && steps > 0) {
+            similar = photos.slice(comparing_iter, comparing_iter + 1);
+            for (let i = comparing_iter + 1; i < photos.length; i++) {
+                if (compareTwoPhotos(similar[0], photos[i])) {
+                    similar.push(photos[i]);
+                }
+            }
+            if (similar.length > 1) {
+                showDuplicates(similar);
+                print(similar);
+            }      
+            comparing_iter += 1;
+            steps -= 1;
+        }
         background(45);
+        if (similar[0].img.width > similar[0].img.height) {
+            let mult = similar[0].img.height / similar[0].img.width;
+            image(similar[0].img, 0, 25, width, (height-25) * mult);
+        } else {
+            let mult = similar[0].img.width / similar[0].img.height;
+            image(similar[0].img, 0, 25, width * mult, height-25);
+        }
         let pr = map(comparing_iter, 0, photos.length - 1, 0, 100);
         fill(125); 
         rect(0, 0, map(pr, 0, 100, 0, width), 25);
@@ -28,28 +51,6 @@ function draw() {
         textSize(25);
         fill(255);
         text(Math.floor(pr) + '%', map(pr, 0, 100, 0, width) / 2, 25 / 2);
-
-        var similar = photos.slice(comparing_iter, comparing_iter + 1);
-        if (similar[0].img.width > similar[0].img.height) {
-            let mult = similar[0].img.height / similar[0].img.width;
-            image(similar[0].img, 0, 25, width, (height-25) * mult);
-        } else {
-            let mult = similar[0].img.width / similar[0].img.height;
-            image(similar[0].img, 0, 25, width * mult, height-25);
-
-        }
-
-        for (let i = comparing_iter + 1; i < photos.length; i++) {
-            //image(photos[i].img, width - photos[i].img.width, 25).draw();
-            if (compareTwoPhotos(similar[0], photos[i])) {
-                similar.push(photos[i]);
-            }
-        }
-        if (similar.length > 1) {
-            showDuplicates(similar);
-            print(similar);
-        }      
-        comparing_iter += 1;
     }
 }
 
@@ -60,6 +61,7 @@ function getAlbums() {
 function printAlbums(response) {
     print(response);
     for (let i = 0; i < response.response.count; i++){
+        if (response.response.items[i].id != -9000) {
         var album = response.response.items[i];
         var album_info = createDiv();
         album_info.album_id = album.id;
@@ -70,8 +72,8 @@ function printAlbums(response) {
         album_info.child(title);
         album_info.child(img);
         albums_div.child(album_info);
+        }
     }
-
 }
 
 function changeAlbumsList() {
@@ -97,22 +99,25 @@ function getAlbumsPhotos(album_id) {
 function appendAlbumsPhotos(response) {
     if (response.response == null) {
         print(response);
-        process_bar['album_id='+album_id].html('ERROR!' + response.error.error_msg);
-        return;
-    }
-    album_id = response.response.items[0].album_id;
-    for (let i in response.response.items) {
-        let item = response.response.items[i];
-        let min_size = item.sizes.reduce(function (a, b) {
-            if (a.height > b.height) { return b;} 
-            else {return a;}
-        });
-        item.img = loadImage(min_size.url, successLoad);
-        item.img.album_id = item.album_id;
-        albums['album_id='+item.album_id].push(item);
-    }
-    if (response.response.count > albums['album_id='+album_id].length) {
+        if (response.error != null) {
+            process_bar['album_id='+album_id].html('ERROR!' + response.error.error_msg);
+        }
         request(appendAlbumsPhotos, 'photos.get', {'album_id': album_id, 'count': 1000, 'offset': albums['album_id='+album_id].length});
+    } else {
+        album_id = response.response.items[0].album_id;
+        for (let i in response.response.items) {
+            let item = response.response.items[i];
+            let min_size = item.sizes.reduce(function (a, b) {
+                if (a.height > b.height) { return b;} 
+                else {return a;}
+            });
+            item.img = loadImage(min_size.url, successLoad);
+            item.img.album_id = item.album_id;
+            albums['album_id='+item.album_id].push(item);
+        }
+        if (response.response.count > albums['album_id='+album_id].length) {
+            request(appendAlbumsPhotos, 'photos.get', {'album_id': album_id, 'count': 1000, 'offset': albums['album_id='+album_id].length});
+        }
     }
 }
 

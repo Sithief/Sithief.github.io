@@ -39,7 +39,7 @@ function request(callback_function, method, parametrs) {
     url += params.join('&');
     print('url = '+ url);
     sleep(250).then(() => {
-        loadJSON(url, callback_function, 'jsonp');
+        loadJSON(url, callback_function, 'jsonp', callback_function);
     });
 }
 

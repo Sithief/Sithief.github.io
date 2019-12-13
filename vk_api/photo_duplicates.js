@@ -7,6 +7,7 @@ var accuracy = 5;
 var photos;
 var comparing_iter = -1;
 var tmp_comparing_iter = -1;
+var album_size = 0;
 
 function setup() {
     readCookie();
@@ -116,8 +117,12 @@ function appendAlbumsPhotos(response) {
             albums['album_id='+item.album_id].push(item);
         }
         if (response.response.count > albums['album_id='+album_id].length) {
+            album_size = response.response.count;
             request(appendAlbumsPhotos, 'photos.get', {'album_id': album_id, 'count': 1000, 'offset': albums['album_id='+album_id].length});
+        } else {
+            album_size = albums['album_id='+album_id].length;
         }
+
     }
 }
 
@@ -125,8 +130,13 @@ function successLoad() {
     //this.loadPixels();
     let alb = albums['album_id='+this.album_id];
     let success = alb.filter(a => a.img.height > 1);
-    let progress = Math.floor(map(success.length, 0, alb.length, 0, 100));
-    process_bar['album_id='+this.album_id].html(success.length + '/' + alb.length);
+    //let progress = Math.floor(map(success.length, 0, alb.length, 0, 100));
+    if (success.length == album_size) {
+        wait_text = ' Альбом загружен';   
+    } else {
+        wait_text = ' Дождитесь окончания загрузки ';
+    }
+    process_bar['album_id='+this.album_id].html(success.length + '/' + album_size + wait_text);
 }
 
 function searchDuplicates() {

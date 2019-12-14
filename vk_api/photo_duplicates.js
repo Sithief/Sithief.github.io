@@ -8,10 +8,18 @@ var photos;
 var comparing_iter = -1;
 var tmp_comparing_iter = -1;
 var album_size = 0;
+var slider;
 
 function setup() {
     readCookie();
     frameRate(1);
+    slider = createSlider(0, 128, accuracy, 1);
+    slider.mouseClicked(updateAccuracy);
+    slider.text = createDiv('Точность совпадений:' + (100 - Math.floor(accuracy / 2.56)) + '%');
+    slider.div = createDiv();
+    slider.div.child(slider);
+    slider.div.child(slider.text);
+
     albums_div = createDiv('Выберите альбомы для поиска повторов');
     continue_button = createButton('Начать поиск');
     continue_button.mouseClicked(searchDuplicates);
@@ -126,6 +134,11 @@ function appendAlbumsPhotos(response) {
     }
 }
 
+function updateAccuracy() {
+    accuracy = 128 - slider.value();
+    slider.text.html('Точность совпадений:' + (100 - Math.floor(accuracy / 2.56)) + '%');
+}
+
 function successLoad() {
     //this.loadPixels();
     let alb = albums['album_id='+this.album_id];
@@ -142,6 +155,7 @@ function successLoad() {
 function searchDuplicates() {
     if (albums_div){
         albums_div.remove();
+        slider.remove();
     }
     photos = [];
     for (let a in albums) {

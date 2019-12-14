@@ -13,7 +13,7 @@ var slider;
 function setup() {
     readCookie();
     frameRate(1);
-    slider = createSlider(0, 128, accuracy, 1);
+    slider = createSlider(0, 128, 128 - accuracy, 1);
     slider.mouseClicked(updateAccuracy);
     slider.text = createDiv('Точность совпадений:' + (100 - Math.floor(accuracy / 2.56)) + '%');
     slider.div = createDiv();
@@ -61,6 +61,11 @@ function draw() {
         fill(255);
         text(Math.floor(pr) + '%', map(pr, 0, 100, 0, width) / 2, 25 / 2);
     }
+}
+
+function updateAccuracy() {
+    accuracy = 128 - slider.value();
+    slider.text.html('Точность совпадений:' + (100 - Math.floor(accuracy / 2.56)) + '%');
 }
 
 function getAlbums() {
@@ -132,11 +137,6 @@ function appendAlbumsPhotos(response) {
         }
 
     }
-}
-
-function updateAccuracy() {
-    accuracy = 128 - slider.value();
-    slider.text.html('Точность совпадений:' + (100 - Math.floor(accuracy / 2.56)) + '%');
 }
 
 function successLoad() {
